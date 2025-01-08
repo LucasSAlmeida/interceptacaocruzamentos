@@ -58,8 +58,11 @@ filtered_df_shots=df_shots[(df_shots['evento'] == selected_action) & (df_shots['
 pitch_figure_shots=create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df_shots)
 st.plotly_chart(pitch_figure_shots)
 
-
-
+st.title("Interceptações dos cruzamentos")
+df_interceptions=df[df['evento']=='Interceptação']
+filtered_df_interc=df_interceptions[df_interceptions['jogo'] == selected_game]
+pitch_figure_interc = create_pitch_plotly(80,60,'yards','black',df=filtered_df_interc)
+st.plotly_chart(pitch_figure_interc)
 
 
 
