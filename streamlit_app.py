@@ -7,13 +7,16 @@ from utils.DrawPitchSetPieces import create_pitch_plotly
 # Carregar os dados
 df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/refs/heads/main/teste_ic.csv')
 
+st.title("Taxa de Interceptação de Cruzamentos - CIR")
+st.subheader("Quantidade de cruzamentos que são feitos para a grande área, o quanto são interceptados e quantos geram finalização.")
 # Dropdowns
 #selected_player = st.selectbox('Selecione um jogador', df.posicao.unique())
-selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
+
 #selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
 
 # 1. Gráfico de Ações em Campo
-st.subheader('Cruzamentos na grande área')
+st.title('Cruzamentos na grande área')
+selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
 df_filter_cross = df[df['evento'] == "Cruzamento"]
 filtered_df = df_filter_cross[df_filter_cross['jogo'] == selected_game]
 pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
