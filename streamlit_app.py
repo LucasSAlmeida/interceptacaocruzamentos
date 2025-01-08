@@ -5,7 +5,7 @@ import plotly.express as px
 from utils.DrawPitchSetPieces import create_pitch_plotly
 
 # Carregar os dados
-df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/main/eventos.csv')
+df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/refs/heads/main/teste_ic.csv')
 
 # Dropdowns
 selected_player = st.selectbox('Selecione um jogador', df.posicao.unique())
