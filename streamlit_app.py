@@ -7,10 +7,6 @@ from utils.DrawPitchSetPieces import create_pitch_plotly
 # Carregar os dados
 df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/main/eventos.csv')
 
-
-# Título da aplicação
-st.title("Ituano Futebol Clube - Sub20")
-
 # Dropdowns
 selected_player = st.selectbox('Selecione um jogador', df.posicao.unique())
 selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
