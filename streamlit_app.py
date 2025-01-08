@@ -51,9 +51,10 @@ for _, row in filtered_df.iterrows():
 st.plotly_chart(pitch_figure)
 
 st.title("Finalizações e gols a partir de cruzamentos")
-selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
 df_shots=df[(df["evento"] == "Finalização") | (df["evento"] == "Gol")]
-pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
+selected_action = st.selectbox('Selecione uma ação', df_shots.evento.unique())
+
+#pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=)
 
 
 
