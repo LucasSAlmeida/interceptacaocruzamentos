@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go 
 import plotly.express as px
-from utils.DrawPitch import create_pitch_plotly
+from utils.DrawPitchSetPieces import create_pitch_plotly
 
 # Carregar os dados
 df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/main/eventos.csv')
