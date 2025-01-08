@@ -12,11 +12,12 @@ st.subheader("Quantidade de cruzamentos que são feitos para a grande área, o q
 # Dropdowns
 #selected_player = st.selectbox('Selecione um jogador', df.posicao.unique())
 
-#selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
 
-# 1. Gráfico de Ações em Campo
-st.title('Cruzamentos na grande área')
 selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
+# 1. Gráfico de Ações em Campo
+
+st.title('Cruzamentos na grande área')
+
 df_filter_cross = df[df['evento'] == "Cruzamento"]
 filtered_df = df_filter_cross[df_filter_cross['jogo'] == selected_game]
 pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
@@ -48,4 +49,19 @@ for _, row in filtered_df.iterrows():
                 arrowcolor='black'
             )
 st.plotly_chart(pitch_figure)
+
+st.title("Finalizações e gols a partir de cruzamentos")
+selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
+df_shots=df[(df["evento"] == "Finalização") | (df["evento"] == "Gol")]
+pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
+
+
+
+
+
+
+
+
+
+
 
