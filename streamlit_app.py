@@ -16,8 +16,8 @@ selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
 st.subheader('Cruzamentos na grande área')
 df_filter_cross = df[df['evento'] == "Cruzamento"]
 filtered_df = df_filter_cross[df_filter_cross['jogo'] == selected_game]
-pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_passes)
-for _, row in filtered_passes.iterrows():
+pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
+for _, row in filtered_df.iterrows():
     pitch_figure.add_trace(
         go.Scatter(
                     x=[row['x']],
