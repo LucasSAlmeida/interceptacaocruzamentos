@@ -54,7 +54,9 @@ st.title("Finalizações e gols a partir de cruzamentos")
 df_shots=df[(df["evento"] == "Finalização") | (df["evento"] == "Gol")]
 selected_action = st.selectbox('Selecione uma ação', df_shots.evento.unique())
 
-#pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=)
+filtered_df_shots=df_shots[(df_shots['evento'] == selected_action) & (df_shots['jogo'] == selected_game)]
+pitch_figure_shots=create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
+st.plotly_chart(pitch_figure_shots)
 
 
 
