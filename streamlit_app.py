@@ -39,7 +39,7 @@ chart = alt.Chart(source).mark_bar().encode(
         'sum(time):Q',
         axis=alt.Axis(
             title="Total de ações pós-cruzamento",
-            tickCount=5,
+            tickCount=10,
         ),
         scale=alt.Scale(
             domain=[0, 10]
