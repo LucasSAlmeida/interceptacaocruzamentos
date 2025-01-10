@@ -46,6 +46,12 @@ chart = alt.Chart(source).mark_bar().encode(
 )
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
+st.title("Análise longitudinal")
+#chart = alt.Chart(source).mark_line().encode(
+#        alt.X('jogo:O'),
+#        alt.Y('perc:Q', axis=alt.Axis(format='%')),
+#        color='evento:N'
+#    )
 
 # Gráficos com noções de espaco
 # Dropdowns para seleção
