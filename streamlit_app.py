@@ -38,10 +38,10 @@ chart = alt.Chart(source).mark_bar().encode(
     y='evento:O',
     color='evento:N',
     row='jogo:N',
-    tooltip=[  # Custom tooltip to display additional info on hover
-        alt.Tooltip('sum(time):Q', title='Total de Ações'),  # Show sum(time) with a custom label
-        alt.Tooltip('evento:N', title='Tipo de Ação'),     # Show event type with a custom label
-        alt.Tooltip('jogo:N', title='Jogo')                  # Show game with a custom label
+    tooltip=[  
+        alt.Tooltip('sum(time):Q', title='Total de Ações'),  
+        alt.Tooltip('evento:N', title='Tipo de Ação'),     
+        alt.Tooltip('jogo:N', title='Jogo')                  
     ]
 )
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
