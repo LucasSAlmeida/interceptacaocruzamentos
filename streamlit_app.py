@@ -15,7 +15,7 @@ st.text("Quantidade de cruzamentos que são feitos para a grande área, o quanto
 
 
 #Gráficos exploratórios
-st.title("Resumo estatístico")
+st.title("Resumo estatístico por jogo")
 df_defense = df[df['evento'] != "Cruzamento"]
 df_defense_gb=df_defense.groupby(["evento","jogo"]).count()
 df_defense_gb.reset_index(inplace=True)
@@ -23,23 +23,13 @@ df_defense_gb.drop(["x","y","x2","y2"],axis=1,inplace=True)
 df_defense_gb['porcentagem']=df_defense_gb['time']/df_defense_gb['time'].sum() * 100
 df_defense_gb['porcentagem_texto']=df_defense_gb['porcentagem'].round(1).astype('str') + '%'
 
-#source = df_defense_gb
-#chart = alt.Chart(source).mark_bar().encode(
-#        x=alt.X('sum(time):Q',
-#                   axis=alt.Axis(title="Total de ações pós-cruzamento"),
-#                   scale=alt.Scale(domain=[0,10])),
-#        y='evento:O',
-#        color='evento:N',
-#        row='jogo:N'
-#    )
-#st.altair_chart(chart, theme="streamlit", use_container_width=True)
 source = df_defense_gb
 chart = alt.Chart(source).mark_bar().encode(
     x=alt.X(
         'sum(time):Q',
         axis=alt.Axis(
             title="Total de ações pós-cruzamento",
-            tickCount=10,
+            tickCount=5,
         ),
         scale=alt.Scale(
             domain=[0, 10]
@@ -47,9 +37,13 @@ chart = alt.Chart(source).mark_bar().encode(
     ),
     y='evento:O',
     color='evento:N',
-    row='jogo:N'
+    row='jogo:N',
+    tooltip=[  # Custom tooltip to display additional info on hover
+        alt.Tooltip('sum(time):Q', title='Total de Ações'),  # Show sum(time) with a custom label
+        alt.Tooltip('evento:N', title='Tipo de Ação'),     # Show event type with a custom label
+        alt.Tooltip('jogo:N', title='Jogo')                  # Show game with a custom label
+    ]
 )
-
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 
