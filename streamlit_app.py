@@ -55,14 +55,13 @@ if selected_action in ['Cruzamento']:
                 arrowcolor='black'
             )
             st.plotly_chart(pitch_figure)
-                else:
+    else:
         st.write(f"Não foram encontrados dados sobre '{selected_action}' para o jogador {selected_player} no jogo {selected_game}.")
 else:
     filtered_action_df = filtered_df[(filtered_df['evento'] == selected_action)]
     pitch_figure = create_pitch_plotly(120, 80, 'yards', 'black', filtered_action_df)
     st.plotly_chart(pitch_figure)
 
-st.title("Finalizações e gols a partir de cruzamentos")
 
 
 
