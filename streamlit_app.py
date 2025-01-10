@@ -47,11 +47,18 @@ chart = alt.Chart(source).mark_bar().encode(
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 st.title("Análise longitudinal")
-#chart = alt.Chart(source).mark_line().encode(
-#        alt.X('jogo:O'),
-#        alt.Y('perc:Q', axis=alt.Axis(format='%')),
-#        color='evento:N'
-#    )
+porc=pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/refs/heads/main/porcentagens.csv')
+st.table(data=porc)
+
+source = porc
+chart = alt.Chart(source).mark_line().encode(
+        alt.X('jogo:O'),
+        alt.Y('porcentagem:Q', axis=alt.Axis(format='%')),
+        color='evento:N'
+    )              # Show game with a custom label
+
+
+st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 # Gráficos com noções de espaco
 # Dropdowns para seleção
