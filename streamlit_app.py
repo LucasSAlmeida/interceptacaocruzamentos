@@ -15,7 +15,7 @@ st.text("Quantidade de cruzamentos que são feitos para a grande área, o quanto
 
 # Dropdowns
 selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
-selected_action = st.selectbox('Selecione uma ação', df_shots.evento.unique())
+selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
 # 1. Gráfico de Ações em Campo
 
 st.title('Gráficos')
