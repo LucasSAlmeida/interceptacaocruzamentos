@@ -23,15 +23,33 @@ df_defense_gb.drop(["x","y","x2","y2"],axis=1,inplace=True)
 df_defense_gb['porcentagem']=df_defense_gb['time']/df_defense_gb['time'].sum() * 100
 df_defense_gb['porcentagem_texto']=df_defense_gb['porcentagem'].round(1).astype('str') + '%'
 
+#source = df_defense_gb
+#chart = alt.Chart(source).mark_bar().encode(
+#        x=alt.X('sum(time):Q',
+#                   axis=alt.Axis(title="Total de ações pós-cruzamento"),
+#                   scale=alt.Scale(domain=[0,10])),
+#        y='evento:O',
+#        color='evento:N',
+#        row='jogo:N'
+#    )
+#st.altair_chart(chart, theme="streamlit", use_container_width=True)
 source = df_defense_gb
 chart = alt.Chart(source).mark_bar().encode(
-        x=alt.X('sum(time):Q',
-                   axis=alt.Axis(title="Total de ações pós-cruzamento"),
-                   scale=alt.Scale(domain=[0,10])),
-        y='evento:O',
-        color='evento:N',
-        row='jogo:N'
-    )
+    x=alt.X(
+        'sum(time):Q',
+        axis=alt.Axis(
+            title="Total de ações pós-cruzamento",
+            tickCount=5,
+        ),
+        scale=alt.Scale(
+            domain=[0, 10]
+        )
+    ),
+    y='evento:O',
+    color='evento:N',
+    row='jogo:N'
+)
+
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 
