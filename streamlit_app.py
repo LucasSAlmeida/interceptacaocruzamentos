@@ -6,24 +6,30 @@ from utils.DrawPitchSetPieces import create_pitch_plotly
 
 # Carregar os dados
 df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/refs/heads/main/teste_ic.csv')
+#df_filter_cross = df[df['evento'] == "Cruzamento"]
+#df_other=df[df['evento'] != "Cruzamento"]
 
 st.title("Taxa de Interceptação de Cruzamentos - CIR")
-st.subheader("Quantidade de cruzamentos que são feitos para a grande área, o quanto são interceptados e quantos geram finalização.")
+st.text("Quantidade de cruzamentos que são feitos para a grande área, o quanto são interceptados e quantos geram finalização.")
+
+
 # Dropdowns
-#selected_player = st.selectbox('Selecione um jogador', df.posicao.unique())
-
-
 selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
+selected_action = st.selectbox('Selecione uma ação', df_shots.evento.unique())
 # 1. Gráfico de Ações em Campo
 
-st.title('Cruzamentos na grande área')
+st.title('Gráficos')
 
-df_filter_cross = df[df['evento'] == "Cruzamento"]
-filtered_df = df_filter_cross[df_filter_cross['jogo'] == selected_game]
+filtered_df= df[(df['jogo'] == selected_game) & (df['evento'] == selected_action)]
 pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
-for _, row in filtered_df.iterrows():
-    pitch_figure.add_trace(
-        go.Scatter(
+if selected_action in ['Cruzamento']:
+    filtered_df_cross=filtered_df[filtered_df['evento'] == selected_action]
+    if not filtered_df.empty:
+        pitch_figure=create_pitch_plotly(80,60,"yards","black",df=filtered_df_cross)
+        
+        for _, row in filtered_df.iterrows():
+            pitch_figure.add_trace(
+                go.Scatter(
                     x=[row['x']],
                     y=[row['y']],
                     mode='lines+markers',
@@ -33,7 +39,7 @@ for _, row in filtered_df.iterrows():
                     hoverinfo='none',
                 )
             )
-    pitch_figure.add_annotation(
+            pitch_figure.add_annotation(
                 x=row['x2'], 
                 y=row['y2'], 
                 ax=row['x'], 
@@ -48,22 +54,18 @@ for _, row in filtered_df.iterrows():
                 arrowwidth=2,
                 arrowcolor='black'
             )
-st.plotly_chart(pitch_figure)
+            st.plotly_chart(pitch_figure)
+                else:
+        st.write(f"Não foram encontrados dados sobre '{selected_action}' para o jogador {selected_player} no jogo {selected_game}.")
+else:
+    filtered_action_df = filtered_df[(filtered_df['evento'] == selected_action)]
+    pitch_figure = create_pitch_plotly(120, 80, 'yards', 'black', filtered_action_df)
+    st.plotly_chart(pitch_figure)
 
 st.title("Finalizações e gols a partir de cruzamentos")
-df_shots=df[(df["evento"] == "Finalização") | (df["evento"] == "Gol")]
-selected_action = st.selectbox('Selecione uma ação', df_shots.evento.unique())
 
-filtered_df_shots=df_shots[(df_shots['evento'] == selected_action) & (df_shots['jogo'] == selected_game)]
-pitch_figure_shots=create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df_shots)
-st.plotly_chart(pitch_figure_shots)
 
-st.title("Interceptações dos cruzamentos")
 
-df_interceptions=df[df['evento']=='Interceptação']
-filtered_df_interc=df_interceptions[df_interceptions['jogo'] == selected_game]
-pitch_figure_interc = create_pitch_plotly(80,60,'yards','black',df=filtered_df_interc)
-st.plotly_chart(pitch_figure_interc)
 
 
 
