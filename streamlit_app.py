@@ -15,7 +15,7 @@ st.text("Quantidade de cruzamentos que são feitos para a grande área, o quanto
 
 
 #Gráficos exploratórios
-st.title("Dados gerais")
+st.title("Resumo estatístico")
 df_defense = df[df['evento'] != "Cruzamento"]
 df_defense_gb=df_defense.groupby(["evento","jogo"]).count()
 df_defense_gb.reset_index(inplace=True)
@@ -26,7 +26,7 @@ df_defense_gb['porcentagem_texto']=df_defense_gb['porcentagem'].round(1).astype(
 source = df_defense_gb
 chart = alt.Chart(source).mark_bar().encode(
         x=alt.X('sum(time):Q',
-                   axis=alt.Axis(title="Total de ações pós-cruzamento",format=".0f"),
+                   axis=alt.Axis(title="Total de ações pós-cruzamento"),
                    scale=alt.Scale(domain=[0,10])),
         y='evento:O',
         color='evento:N',
@@ -37,6 +37,7 @@ st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 # Gráficos com noções de espaco
 # Dropdowns para seleção
+st.title("Visualização no espaço de campo")
 selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
 selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
 
