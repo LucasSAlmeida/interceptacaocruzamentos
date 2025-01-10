@@ -48,7 +48,7 @@ st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 st.title("Análise longitudinal")
 porc=pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/refs/heads/main/porcentagens.csv')
-st.table(data=porc)
+
 
 source = porc
 chart = alt.Chart(source).mark_line().encode(
