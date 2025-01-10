@@ -1,32 +1,31 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go 
-import plotly.express as px
 from utils.DrawPitchSetPieces import create_pitch_plotly
 
 # Carregar os dados
 df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/refs/heads/main/teste_ic.csv')
-#df_filter_cross = df[df['evento'] == "Cruzamento"]
-#df_other=df[df['evento'] != "Cruzamento"]
 
+# Título e descrição
 st.title("Taxa de Interceptação de Cruzamentos - CIR")
 st.text("Quantidade de cruzamentos que são feitos para a grande área, o quanto são interceptados e quantos geram finalização.")
 
-
-# Dropdowns
+# Dropdowns para seleção
 selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
 selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
-# 1. Gráfico de Ações em Campo
 
-st.title('Gráficos')
+# Filtrar os dados com base nas seleções
+filtered_df = df[(df['jogo'] == selected_game) & (df['evento'] == selected_action)]
 
-filtered_df= df[(df['jogo'] == selected_game) & (df['evento'] == selected_action)]
-pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
-if selected_action in ['Cruzamento']:
-    filtered_df_cross=filtered_df[filtered_df['evento'] == selected_action]
-    if not filtered_df.empty:
-        pitch_figure=create_pitch_plotly(80,60,"yards","black",df=filtered_df_cross)
-        
+# Verificar se há dados para a ação selecionada
+if filtered_df.empty:
+    st.write(f"Não foram encontrados dados sobre '{selected_action}' no jogo '{selected_game}'.")
+else:
+    # Criar o gráfico do campo
+    pitch_figure = create_pitch_plotly(80, 60, 'yards', 'black', df=filtered_df)
+    
+    if selected_action == 'Cruzamento':
+        # Adicionar traços e anotações no gráfico para cruzamentos
         for _, row in filtered_df.iterrows():
             pitch_figure.add_trace(
                 go.Scatter(
@@ -54,13 +53,11 @@ if selected_action in ['Cruzamento']:
                 arrowwidth=2,
                 arrowcolor='black'
             )
-            st.plotly_chart(pitch_figure)
+        st.plotly_chart(pitch_figure)
     else:
-        st.write(f"Não foram encontrados dados sobre '{selected_action}' para o jogador {selected_player} no jogo {selected_game}.")
-else:
-    filtered_action_df = filtered_df[(filtered_df['evento'] == selected_action)]
-    pitch_figure = create_pitch_plotly(120, 80, 'yards', 'black', filtered_action_df)
-    st.plotly_chart(pitch_figure)
+        # Plotar diretamente o campo para outras ações
+        st.plotly_chart(pitch_figure)
+
 
 
 
