@@ -55,7 +55,7 @@ chart = alt.Chart(source).mark_line().encode(
         alt.X('jogo:O'),
         alt.Y('porcentagem:Q', axis=alt.Axis(format='%')),
         color='evento:N'
-    )              # Show game with a custom label
+    )             
 
 
 st.altair_chart(chart, theme="streamlit", use_container_width=True)
