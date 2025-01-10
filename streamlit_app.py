@@ -9,13 +9,13 @@ import altair as alt
 df = pd.read_csv('https://raw.githubusercontent.com/LucasSAlmeida/dados/refs/heads/main/teste_ic.csv')
 
 # Título e descrição
-st.title("Taxa de Interceptação de Cruzamentos - CIR")
+st.title("Cruzamentos na Grande Área - CiPA")
 st.text("Quantidade de cruzamentos que são feitos para a grande área, o quanto são interceptados e quantos geram finalização.")
 
 
 
 #Gráficos exploratórios
-st.title("Resumo estatístico por jogo")
+st.title("Resumo estatístico dos últimos 3 jogos")
 df_defense = df[df['evento'] != "Cruzamento"]
 df_defense_gb=df_defense.groupby(["evento","jogo"]).count()
 df_defense_gb.reset_index(inplace=True)
@@ -49,7 +49,7 @@ st.altair_chart(chart, theme="streamlit", use_container_width=True)
 
 # Gráficos com noções de espaco
 # Dropdowns para seleção
-st.title("Visualização no espaço de campo")
+st.title("Visualização de ações em campo")
 selected_game = st.selectbox('Selecione um jogo', df.jogo.unique())
 selected_action = st.selectbox('Selecione uma ação', df.evento.unique())
 
